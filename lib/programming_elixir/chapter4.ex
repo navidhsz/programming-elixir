@@ -1,4 +1,4 @@
-defmodule ProgrammingElixir.Chapter3 do
+defmodule ProgrammingElixir.Chapter4 do
   @moduledoc false
 
   # no exercise
