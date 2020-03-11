@@ -50,5 +50,14 @@ defmodule ProgrammingElixir.Chapter6Test do
   test "should return 2 for gcd(2,0)" do
     assert Chapter6.gcd(2,0) == 2
   end
+
+  # Exercise modulesAndFunctions-6
+  test "should return 273 for guess(273,1..1000)" do
+    assert Chapter6.guess(273,1..1000) == 273
+  end
+
+  test "should return 273 for guess(300,250..1000)" do
+    assert Chapter6.guess(300,250..1000) == 300
+  end
   
 end
