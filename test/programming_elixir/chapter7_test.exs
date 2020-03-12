@@ -25,5 +25,10 @@ defmodule ProgrammingElixir.Chapter7Test do
     assert Chapter7.caesar('ryvkve',13) == 'elixir'
   end
 
+  # Exercise listAndRecursion-4
+
+  test "should return '[5,6,7,8,10]' for span(5,10)" do
+    assert Chapter7.span(5,10) == [5,6,7,8,9,10]
+  end
 
 end

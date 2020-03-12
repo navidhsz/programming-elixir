@@ -31,4 +31,14 @@ defmodule ProgrammingElixir.Chapter7 do
   defp caesarHelper([head | tail],n) when head+n <= ?z, do: [head+n | caesarHelper(tail,n)]
   defp caesarHelper([head | tail],n) when head+n > ?z, do: [head+n-?z+?a-1 | caesarHelper(tail,n)]
 
+  # Exercise listAndRecursion-4
+
+  def span(from,to) when from == to do
+    [from]
+  end
+
+  def span(from,to) do
+    [from | span(from+1,to)]
+  end
+
 end
