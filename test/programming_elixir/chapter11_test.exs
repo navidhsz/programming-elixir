@@ -18,16 +18,14 @@ defmodule ProgrammingElixir.Chapter11Test do
 
   # Exercise StringsAndBinaries-2
   test "should return 'true' for anagram?('cat'','act'')" do
-    assert Chapter11.anagram?("cat","act") == true
+    assert Chapter11.anagram?("cat", "act") == true
   end
 
   test "should return 'true' for anagram?('Listen','Silent')" do
-    assert Chapter11.anagram?("Listen","Silent") == true
+    assert Chapter11.anagram?("Listen", "Silent") == true
   end
 
   test "should return 'true' for anagram?('Listens','Silent')" do
-    assert Chapter11.anagram?("Listens","Silent") == false
+    assert Chapter11.anagram?("Listens", "Silent") == false
   end
-
-
 end

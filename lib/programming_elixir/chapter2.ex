@@ -3,7 +3,7 @@ defmodule ProgrammingElixir.Chapter2 do
 
   ##### Exercise: patten-matching-1
 
-  #test module has unit test for below
+  # test module has unit test for below
 
   # a = [1,2,3]   match
   # a = 4     match
@@ -28,5 +28,4 @@ defmodule ProgrammingElixir.Chapter2 do
   # ^a = 2 matchError
   # ^a = 1 match
   # ^a = 2 - a match
-
 end

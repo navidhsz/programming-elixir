@@ -40,24 +40,23 @@ defmodule ProgrammingElixir.Chapter6Test do
   # Exercise modulesAndFunctions-5
 
   test "should return 1 for gcd(5,2)" do
-    assert Chapter6.gcd(5,2) == 1
+    assert Chapter6.gcd(5, 2) == 1
   end
 
   test "should return 3 for gcd(9,6)" do
-    assert Chapter6.gcd(9,6) == 3
+    assert Chapter6.gcd(9, 6) == 3
   end
 
   test "should return 2 for gcd(2,0)" do
-    assert Chapter6.gcd(2,0) == 2
+    assert Chapter6.gcd(2, 0) == 2
   end
 
   # Exercise modulesAndFunctions-6
   test "should return 273 for guess(273,1..1000)" do
-    assert Chapter6.guess(273,1..1000) == 273
+    assert Chapter6.guess(273, 1..1000) == 273
   end
 
   test "should return 273 for guess(300,250..1000)" do
-    assert Chapter6.guess(300,250..1000) == 300
+    assert Chapter6.guess(300, 250..1000) == 300
   end
-  
 end
