@@ -3,3 +3,5 @@
 .idea
 **/*.iml
 _build
+deps
+mix.lock
