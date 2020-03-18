@@ -78,4 +78,26 @@ defmodule ProgrammingElixir.Chapter15 do
     send(parent, {self(), :testMsg})
     raise "test exception"
   end
+
+  # Exercise: Working with multiple processes-6
+  # me = self() is PID for parent process however self() inside "spawn_link" means PID of the current child process created by spawn_link
+
+  # Exercise: Working with multiple processes-7
+  # by increasing list size (1..100) we can reproduce issue with not using pinned "pid" (^pid)
+  def pmap(collection, fun) do
+    me = self()
+
+    collection
+    |> Enum.map(fn elem ->
+      spawn_link(fn ->
+        send(me, {self(), fun.(elem)})
+      end)
+    end)
+    |> Enum.map(fn pid ->
+      receive do
+        {^pid, result} ->
+          result
+      end
+    end)
+  end
 end

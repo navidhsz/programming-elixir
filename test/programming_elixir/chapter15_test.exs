@@ -96,7 +96,7 @@ defmodule ProgrammingElixir.Chapter15Test do
 
     # At the end, we receive shutdown/error message
     receive do
-      {:DOWN, child_ref, :process, child_pid, {exception, stacktrace}} ->
+      {:DOWN, child_ref, :process, child_pid, {exception, _stacktrace}} ->
         exception_msg = Exception.message(exception)
 
         IO.inspect(
@@ -109,5 +109,15 @@ defmodule ProgrammingElixir.Chapter15Test do
         assert ref == child_ref
         assert "test exception" == exception_msg
     end
+  end
+
+  # Exercise: Working with multiple processes-6
+
+  # Exercise: Working with multiple processes-7
+  test "Parallel map test" do
+    mapper = fn n -> n * n end
+    list = 1..100
+    expected_result = Enum.map(list, mapper)
+    assert Chapter15.pmap(list, mapper) == expected_result
   end
 end
