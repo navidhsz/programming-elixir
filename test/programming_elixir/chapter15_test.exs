@@ -7,6 +7,10 @@ defmodule ProgrammingElixir.Chapter15Test do
 
   doctest Chapter15
 
+  setup_all do
+    [number_of_files: 10, token: "cat"]
+  end
+
   # Exercise: Working with multiple processes-1
 
   test "nothing to test - Exec1" do
@@ -114,10 +118,66 @@ defmodule ProgrammingElixir.Chapter15Test do
   # Exercise: Working with multiple processes-6
 
   # Exercise: Working with multiple processes-7
+
   test "Parallel map test" do
     mapper = fn n -> n * n end
     list = 1..100
     expected_result = Enum.map(list, mapper)
     assert Chapter15.pmap(list, mapper) == expected_result
+  end
+
+  # Exercise: Working with multiple processes-8
+
+  # no assertion
+  test "no test - fib" do
+    to_process = List.duplicate(37, 20)
+
+    Enum.each(1..1, fn num_processes ->
+      {time, result} =
+        :timer.tc(
+          Chapter15.Scheduler,
+          :run,
+          [num_processes, Chapter15.FibSolver, :fib, to_process]
+        )
+
+      if num_processes == 1 do
+        IO.puts(inspect(result))
+        IO.puts("\n # time (s)")
+      end
+
+      :io.format("~2B ~.2f~n", [num_processes, time / 1_000_000.0])
+    end)
+  end
+
+  # no assertion
+  test "no test - file", fixture do
+    number_of_files = fixture.number_of_files
+    token = fixture.token
+    {:ok, path} = Briefly.create(directory: true)
+
+    Enum.each(1..number_of_files, fn n ->
+      File.write!(Path.join(path, "test#{n}.txt"), "#{token} #{token}}")
+    end)
+
+    to_process =
+      Enum.map(1..number_of_files, fn n ->
+        "#{path}/test#{n}.txt"
+      end)
+
+    Enum.each(1..1, fn num_processes ->
+      {time, result} =
+        :timer.tc(
+          Chapter15.SchedulerExercise9,
+          :run,
+          [num_processes, Chapter15.ProcessorExercise9, :processor, to_process, token]
+        )
+
+      if num_processes == 1 do
+        IO.puts(inspect(result))
+        IO.puts("\n # time (s)")
+      end
+
+      :io.format("~2B ~.2f~n", [num_processes, time / 1_000_000.0])
+    end)
   end
 end
