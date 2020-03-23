@@ -61,7 +61,7 @@ defmodule ProgrammingElixir.Chapter18 do
   end
 
   # -------------------------
-  # Exercise: OTP-Supervisors-1
+  # Exercise: OTP-Supervisors-2
 
   defmodule StackAppWithStash do
     def start(args) do
@@ -70,7 +70,7 @@ defmodule ProgrammingElixir.Chapter18 do
         {ProgrammingElixir.Chapter18.StackWithStash, args}
       ]
 
-      opts = [strategy: :one_for_one, name: __MODULE__]
+      opts = [strategy: :rest_for_one, name: __MODULE__]
       Supervisor.start_link(children, opts)
     end
   end
