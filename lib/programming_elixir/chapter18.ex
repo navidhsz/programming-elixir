@@ -55,7 +55,7 @@ defmodule ProgrammingElixir.Chapter18 do
     end
 
     @impl true
-    def terminate(reason, state) do
+    def terminate(_reason, _state) do
       Process.exit(self(), :normal)
     end
   end
@@ -156,7 +156,7 @@ defmodule ProgrammingElixir.Chapter18 do
     end
 
     @impl true
-    def terminate(reason, state) do
+    def terminate(_reason, _state) do
       Process.exit(self(), :normal)
     end
   end

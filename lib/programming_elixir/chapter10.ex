@@ -3,7 +3,7 @@ defmodule ProgrammingElixir.Chapter10 do
 
   # Exercise listAndRecursion-5
 
-  def all?([], func), do: true
+  def all?([], _func), do: true
 
   def all?([head | tail], func) do
     func.(head) and all?(tail, func)
@@ -16,7 +16,7 @@ defmodule ProgrammingElixir.Chapter10 do
     each(tail, func)
   end
 
-  def filter([], func), do: []
+  def filter([], _func), do: []
 
   def filter([head | []], func) do
     if func.(head) do
@@ -34,7 +34,7 @@ defmodule ProgrammingElixir.Chapter10 do
     end
   end
 
-  def split([], n), do: []
+  def split([], _n), do: []
 
   def split(list, n) when n > 0 do
     splitHelper(list, [], n)
@@ -52,7 +52,7 @@ defmodule ProgrammingElixir.Chapter10 do
     {firstList, [head | tail]}
   end
 
-  def take([], n), do: []
+  def take([], _n), do: []
 
   def take([head | tail], n) when n > 0 do
     [head | take(tail, n - 1)]
@@ -63,7 +63,7 @@ defmodule ProgrammingElixir.Chapter10 do
     [reverseHead | take(reverse(reverseTail), n + 1)]
   end
 
-  def take([head | tail], n) when n == 0 do
+  def take([_head | _tail], n) when n == 0 do
     []
   end
 
