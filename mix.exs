@@ -6,7 +6,7 @@ defmodule ProgrammingElixir.MixProject do
       app: :ProgrammingElixir,
       version: "0.1.0",
       elixir: "~> 1.10",
-      start_permanent: Mix.env() == :prod,
+      start_permanent: Mix.env() == :dev,
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
         coveralls: :test,
@@ -29,7 +29,9 @@ defmodule ProgrammingElixir.MixProject do
   defp deps do
     [
       {:excoveralls, "~> 0.12.3"},
-      {:briefly, "~> 0.3.0"}
+      {:briefly, "~> 0.3.0"},
+      {:httpoison, "~> 1.0.0"},
+      {:poison, "~> 3.1"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]

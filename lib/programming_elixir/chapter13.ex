@@ -2,7 +2,7 @@ defmodule ProgrammingElixir.Chapter13 do
   @moduledoc false
 
   defmodule Issues.CLI do
-    # Exercise: OrganizingAProject-1
+    # Exercise: OrganizingAProject-1, 2, 3
 
     @default_count 4
 
@@ -13,7 +13,9 @@ defmodule ProgrammingElixir.Chapter13 do
     """
 
     def run(argv) do
-      parse_args(argv)
+      argv
+      |> parse_args
+      |> process
     end
 
     @doc """
@@ -23,25 +25,87 @@ defmodule ProgrammingElixir.Chapter13 do
     Return a tuple of `{ user, project, count }`, or `:help` if help was given.
     """
     def parse_args(argv) do
-      parse =
-        OptionParser.parse(argv,
-          switches: [help: :boolean],
-          aliases: [h: :help]
-        )
-
-      case parse do
-        {[help: true], _, _} ->
-          :help
-
-        {_, [user, project, count], _} ->
-          {user, project, count}
-
-        {_, [user, project], _} ->
-          {user, project, @default_count}
-
-        _ ->
-          :help
-      end
+      OptionParser.parse(argv,
+        switches: [help: :boolean],
+        aliases: [h: :help]
+      )
+      |> elem(1)
+      |> args_to_internal_representation()
     end
+
+    def args_to_internal_representation([user, project, count]) do
+      {user, project, String.to_integer(count)}
+    end
+
+    def args_to_internal_representation([user, project]) do
+      {user, project, @default_count}
+    end
+
+    # bad arg or --help
+    def args_to_internal_representation(_) do
+      :help
+    end
+
+    def process(:help) do
+      IO.puts("""
+      usage: issues <user> <project> [ count | #{@default_count} ]
+      """)
+
+      System.halt(0)
+    end
+
+    def process({user, project, count}) do
+      Issues.GithubIssues.fetch(user, project)
+      |> decode_response()
+      |> sort_into_descending_order()
+      |> last(count)
+    end
+
+    def last(list, count) do
+      list
+      |> Enum.take(count)
+      |> Enum.reverse()
+    end
+
+    def sort_into_descending_order(list_of_issues) do
+      list_of_issues
+      |> Enum.sort(fn i1, i2 ->
+        i1["created_at"] >= i2["created_at"]
+      end)
+    end
+
+    def decode_response({:ok, body}), do: body
+
+    def decode_response({:error, error}) do
+      IO.puts("Error fetching from Github: #{error["message"]}")
+      System.halt(2)
+    end
+  end
+
+  # -------
+
+  defmodule Issues.GithubIssues do
+    @github_url Application.get_env(:ProgrammingElixir, :github_url)
+
+    @user_agent [{"User-agent", "Elixir dave@pragprog.com"}]
+    def fetch(user, project) do
+      issues_url(user, project)
+      |> HTTPoison.get(@user_agent)
+      |> handle_response
+    end
+
+    def issues_url(user, project) do
+      "#{@github_url}/repos/#{user}/#{project}/issues"
+    end
+
+    def handle_response({_, %{status_code: status_code, body: body}}) do
+      {
+        status_code |> check_for_error(),
+        body |> Poison.Parser.parse!()
+      }
+    end
+
+    defp check_for_error(200), do: :ok
+    defp check_for_error(_), do: :error
   end
 end
