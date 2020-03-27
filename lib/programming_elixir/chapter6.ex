@@ -28,27 +28,27 @@ defmodule ProgrammingElixir.Chapter6 do
   # Exercise modulesAndFunctions-5
 
   def gcd(x, 0), do: x
-  def gcd(x, y), do: gcd(y, rem(x, y))
+  def gcd(x, y), do: y |> gcd(rem(x, y))
 
   # Exercise modulesAndFunctions-6
 
   def guess(actual, range) when is_map(range) do
     a..b = range
-    helper(actual, div(b - a + 1, 2), a..b)
+    actual |> helper(div(b - a + 1, 2), a..b)
   end
 
-  def helper(actual, current_guess, a..b) when actual > current_guess do
-    IO.puts("Is it #{current_guess}")
-    helper(actual, div(b + current_guess, 2), current_guess..b)
+  def helper(actual, current_guess, _a..b) when actual > current_guess do
+    "Is it #{current_guess}" |> IO.puts()
+    actual |> helper(div(b + current_guess, 2), current_guess..b)
   end
 
-  def helper(actual, current_guess, a..b) when actual < current_guess do
-    IO.puts("Is it #{current_guess}")
-    helper(actual, div(current_guess - a, 2) + a, a..current_guess)
+  def helper(actual, current_guess, a.._b) when actual < current_guess do
+    "Is it #{current_guess}" |> IO.puts()
+    actual |> helper(div(current_guess - a, 2) + a, a..current_guess)
   end
 
-  def helper(actual, current_guess, a..b) when actual == current_guess do
-    IO.puts("It is #{current_guess}")
+  def helper(actual, current_guess, _a.._b) when actual == current_guess do
+    "It is #{current_guess}" |> IO.puts()
     current_guess
   end
 end

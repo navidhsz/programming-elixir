@@ -65,8 +65,8 @@ defmodule ProgrammingElixir.Chapter17 do
       {:noreply, [new_value | initial_stack_values]}
     end
 
-    def terminate(reason, state) do
-      IO.puts(inspect(reason))
+    def terminate(reason, _state) do
+      inspect(reason) |> IO.puts()
       Process.exit(self(), :normal)
     end
   end

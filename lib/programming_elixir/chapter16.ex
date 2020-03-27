@@ -45,7 +45,7 @@ defmodule ProgrammingElixir.Chapter16 do
       {current, rest}
     end
 
-    defp get_current_client(all_clients, current_clients) do
+    defp get_current_client(_all_clients, current_clients) do
       [current | rest] = current_clients
       {current, rest}
     end
@@ -68,7 +68,7 @@ defmodule ProgrammingElixir.Chapter16 do
     def receiver do
       receive do
         {:tick} ->
-          IO.puts("tock in client")
+          "tock in client" |> IO.puts()
           receiver()
       end
     end

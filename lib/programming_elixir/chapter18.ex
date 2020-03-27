@@ -134,24 +134,24 @@ defmodule ProgrammingElixir.Chapter18 do
       [head | tail] = initial_stack_values
 
       if head == "kill" do
-        ProgrammingElixir.Chapter18.Stash.update(tail)
+        tail |> ProgrammingElixir.Chapter18.Stash.update()
         # emulate process crash
         raise "kill stack process"
       end
 
-      ProgrammingElixir.Chapter18.Stash.update(tail)
+      tail |> ProgrammingElixir.Chapter18.Stash.update()
       {:reply, head, tail}
     end
 
     @impl true
     def handle_cast({:push, []}, initial_stack_values) do
-      ProgrammingElixir.Chapter18.Stash.update([initial_stack_values])
+      [initial_stack_values] |> ProgrammingElixir.Chapter18.Stash.update()
       {:noreply, [initial_stack_values]}
     end
 
     @impl true
     def handle_cast({:push, new_value}, initial_stack_values) do
-      ProgrammingElixir.Chapter18.Stash.update([new_value | initial_stack_values])
+      [new_value | initial_stack_values] |> ProgrammingElixir.Chapter18.Stash.update()
       {:noreply, [new_value | initial_stack_values]}
     end
 

@@ -49,10 +49,10 @@ defmodule ProgrammingElixir.Chapter5 do
   # Exercise function-5
 
   def map(lst) do
-    Enum.map(lst, &(&1 + 2))
+    lst |> Enum.map(&(&1 + 2))
   end
 
   def each(lst) do
-    Enum.each(lst, &IO.inspect(&1))
+    lst |> Enum.each(&IO.inspect(&1))
   end
 end

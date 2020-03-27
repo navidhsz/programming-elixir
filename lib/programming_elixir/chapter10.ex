@@ -37,7 +37,7 @@ defmodule ProgrammingElixir.Chapter10 do
   def split([], _n), do: []
 
   def split(list, n) when n > 0 do
-    splitHelper(list, [], n)
+    list |> splitHelper([], n)
   end
 
   def split(list, n) when n == 0 do
@@ -45,7 +45,7 @@ defmodule ProgrammingElixir.Chapter10 do
   end
 
   defp splitHelper([head | tail], firstList, n) when n > 0 do
-    splitHelper(tail, firstList ++ [head], n - 1)
+    tail |> splitHelper(firstList ++ [head], n - 1)
   end
 
   defp splitHelper([head | tail], firstList, n) when n == 0 do
