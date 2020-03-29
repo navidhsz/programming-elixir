@@ -20,6 +20,6 @@ defmodule ProgrammingElixir.Chapter23Test do
   # Exercise: LinkingModules-BehavioursAndUse-3
 
   test "Tracer module with func_with_guard - no assertion" do
-    assert Chapter23.Test.func_with_guard([1, 2, 3, 4]) == 10
+    assert Chapter23.Test.func_with_guard(10, 2, 3) == 15
   end
 end
