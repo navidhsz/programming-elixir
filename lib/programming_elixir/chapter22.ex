@@ -58,4 +58,38 @@ defmodule ProgrammingElixir.Chapter22 do
   #          [{:n, [], ProgrammingElixir.Chapter22.Times}, 3]}
   #      ]
   #    ]}
+
+  # Exercise: MacrosAndCodeEvaluation-3 #FIXME below module is not correct
+
+  defmodule Exercise3 do
+    defmacro natrualLangFormat(expression) do
+      quote do
+        unquote(do_convert(expression))
+      end
+    end
+
+    defp do_convert({operator, _metadata, [operand1, operand2]})
+         when is_number(operand1) and is_number(operand2) do
+      operator_to_text = %{:- => "subtract", :+ => "add", :* => "multiply"}
+      operator = get_operator_test(operator)
+      "#{operand1} #{operator} #{operand2}"
+    end
+
+    defp do_convert({operator, _metadata, [operand1, operand2]}) when is_tuple(operand1) do
+      operand1 = do_convert(operand1)
+      operator = get_operator_test(operator)
+      "#{operand1} #{operator} #{operand2}"
+    end
+
+    defp do_convert({operator, _metadata, [operand1, operand2]}) when is_tuple(operand2) do
+      operand2 = do_convert(operand2)
+      operator = get_operator_test(operator)
+      "#{operand1} #{operator} #{operand2}"
+    end
+
+    defp get_operator_test(operator) when is_atom(operator) do
+      operator_to_text = %{:- => "subtract", :+ => "add", :* => "multiply"}
+      operator_to_text[operator]
+    end
+  end
 end
